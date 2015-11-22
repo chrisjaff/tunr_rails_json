@@ -1,15 +1,25 @@
 class ArtistsController < ApplicationController
-  before_action :set_artist, only: [:show, :edit, :update, :destroy]
 
   # GET /artists
   # GET /artists.json
   def index
     @artists = Artist.all
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @artists }
+    end
   end
 
   # GET /artists/1
   # GET /artists/1.json
   def show
+    @artist = Artist.find( params[:id] )
+
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @artist, include: :songs }
+    end
   end
 
   # GET /artists/new
@@ -24,7 +34,6 @@ class ArtistsController < ApplicationController
   # POST /artists
   # POST /artists.json
   def create
-    # fail params.inspect
     @artist = Artist.new(artist_params)
 
     respond_to do |format|
@@ -63,11 +72,6 @@ class ArtistsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_artist
-      @artist = Artist.find(params[:id])
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def artist_params
       params.require(:artist).permit(:name, :nationality, :photo_url)
