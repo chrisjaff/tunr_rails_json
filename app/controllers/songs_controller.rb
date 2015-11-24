@@ -27,6 +27,7 @@ class SongsController < ApplicationController
   end
 
   def edit
+    @artist = Artist.find(params[:artist_id])
     @song = Song.find(params[:id])
   end
 
@@ -45,6 +46,7 @@ class SongsController < ApplicationController
   end
 
   def destroy
+    @artist = Artist.find(params[:artist_id])
     @song = Song.find(params[:id])
     @song.destroy
     respond_to do |format|
