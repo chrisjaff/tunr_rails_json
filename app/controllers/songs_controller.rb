@@ -32,7 +32,7 @@ class SongsController < ApplicationController
 
   def update
     @artist = Artist.find(params[:artist_id])
-    @song = @artist.songs.find(song_params)
+    @song = @artist.songs.find(params[:id])
     respond_to do |format|
       if @song.update(song_params)
         format.html { redirect_to @song, notice: 'Song was successfully updated.' }
